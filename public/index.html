@@ -14,5 +14,28 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+  <script>
+    class CreateReqest {
+      constructor (){
+        this.statickUrl = 'https://www.anapioficeandfire.com/api'
+      }
+
+      async onFetchCharacters(){
+        const res = await fetch(`${this.statickUrl}/characters?page=6&pageSize=${prompt('Номер страницы')}`);
+        return  await res.json();
+      }
+
+      async onFetchCharacter(){
+        const res = await fetch(`${this.statickUrl}/characters/${prompt('Номер персонажа')}`);
+        return  await res.json();
+      }
+    }
+
+    const code = new CreateReqest();
+    console.log(code.onFetchCharacters());
+    console.log(code.onFetchCharacter())
+
+
+  </script>
   </body>
 </html>
