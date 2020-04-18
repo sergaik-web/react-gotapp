@@ -13,6 +13,7 @@ export default class GodService {
 
   async getAllCharacters() {
     const res = await this.onFetch(`/characters?page=7&pageSize=10`);
+    console.log(res);
     return res.map(this._transformCharacter);
   }
 
@@ -43,6 +44,7 @@ export default class GodService {
 
   _transformCharacter(char) {
     return {
+      id: parseInt(char.url.split("/")[char.url.split("/").length - 1]),
       name: char.name,
       gender: char.gender,
       born: char.born,

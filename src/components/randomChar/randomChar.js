@@ -5,9 +5,13 @@ import Spiner from "../spiner";
 import ErrorMessage from "../errorMess";
 
 export default class RandomChar extends Component {
-  constructor() {
-    super();
+  componentDidMount() {
     this.updateChar();
+    this.timerId = setInterval(this.updateChar, 1500);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerId);
   }
 
   gotService = new GodService();
@@ -29,13 +33,14 @@ export default class RandomChar extends Component {
     });
   };
 
-  updateChar() {
+  updateChar = () => {
+    console.log("update");
     const id = Math.floor(Math.random() * 400 + 25);
     this.gotService
       .getCharacter(id)
       .then(this.onCharLoaded)
       .catch(this.onError);
-  }
+  };
 
   render() {
     const { char, loading, error } = this.state;
