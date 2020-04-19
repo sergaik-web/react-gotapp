@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { Button, Col, Row, Container } from "reactstrap";
 import Header from "../header";
 import RandomChar from "../randomChar";
-import ItemList from "../itemList";
-import CharDetails from "../charDetails";
+import CharPage from "../charPage";
 
 export default class App extends Component {
   state = {
@@ -13,12 +12,6 @@ export default class App extends Component {
 
   hideRandomChar = () => {
     this.setState({ defaultChar: !this.state.defaultChar });
-  };
-
-  onCharSelected = (id) => {
-    this.setState({
-      selectedChar: id,
-    });
   };
 
   render() {
@@ -39,14 +32,7 @@ export default class App extends Component {
               </Button>
             </Col>
           </Row>
-          <Row>
-            <Col md="6">
-              <ItemList onCharSelected={this.onCharSelected} />
-            </Col>
-            <Col md="6">
-              <CharDetails charId={this.state.selectedChar} />
-            </Col>
-          </Row>
+          <CharPage />
         </Container>
       </>
     );

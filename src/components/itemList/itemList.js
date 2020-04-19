@@ -2,17 +2,25 @@ import React, { Component } from "react";
 import "./itemList.css";
 import GodService from "../../scripts/fetch";
 import Spiner from "../spiner";
+import ErrorMessage from "../errorMess";
 
 export default class ItemList extends Component {
   godService = new GodService();
 
   state = {
     charList: null,
+    error: false,
   };
 
   componentDidMount() {
     this.godService.getAllCharacters().then((charList) => {
       this.setState({ charList });
+    });
+  }
+
+  componentDidCatch() {
+    this.setState({
+      error: true,
     });
   }
 
@@ -31,6 +39,10 @@ export default class ItemList extends Component {
   }
 
   render() {
+    if (this.state.error) {
+      return <ErrorMessage />;
+    }
+
     const { charList } = this.state;
 
     if (!charList) {

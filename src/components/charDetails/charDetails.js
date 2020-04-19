@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import "./charDetails.css";
 import GodService from "../../scripts/fetch";
+import ErrorMessage from "../errorMess";
 
 export default class CharDetails extends Component {
   godSevice = new GodService();
 
   state = {
     char: null,
+    error: false,
   };
 
   componentDidUpdate(prevProps) {
@@ -17,7 +19,17 @@ export default class CharDetails extends Component {
     }
   }
 
+  componentDidCatch() {
+    this.setState({
+      error: true,
+    });
+  }
+
   render() {
+    if (this.state.error) {
+      return <ErrorMessage />;
+    }
+
     if (this.state.char === null) {
       return (
         <span>

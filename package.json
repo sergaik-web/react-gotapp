@@ -27,6 +27,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "bootstrap": "^4.4.1",
     "prettier": "^2.0.4"
   }
 }
