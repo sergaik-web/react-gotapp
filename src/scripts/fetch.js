@@ -3,58 +3,60 @@ export default class GodService {
     this.statickUrl = "https://www.anapioficeandfire.com/api";
   }
 
-  async onFetch(url) {
+  onFetch = async (url) => {
     const res = await fetch(`${this.statickUrl}${url}`);
     if (!res.ok) {
       throw new Error(`Could not fetch ${url}, status: ${res.status}`);
     }
     return await res.json();
-  }
+  };
 
-  async getAllCharacters() {
-    const res = await this.onFetch(`/characters?page=7&pageSize=10`);
+  getAllCharacters = async () => {
+    const rnd = Math.floor(Math.random() * 100);
+    const res = await this.onFetch(`/characters?page=${rnd}&pageSize=6`);
     console.log(res);
     return res.map(this._transformCharacter);
-  }
+  };
 
-  async getCharacter(id) {
+  getCharacter = async (id) => {
     const res = await this.onFetch(`/characters/${id}`);
     return this._transformCharacter(res);
-  }
+  };
 
-  async getAllHouses() {
+  getAllHouses = async () => {
     const res = await this.onFetch(`/houses/`);
-    return res.map(this._transformCharacter);
-  }
+    return res.map(this._transformHouse);
+  };
 
-  async getHouse(id) {
+  getHouse = async (id) => {
     const res = await this.onFetch(`/characters/${id}`);
-    return this._transformCharacter(res);
-  }
+    return this._transformHouse(res);
+  };
 
-  async getAllBooks() {
+  getAllBooks = async () => {
     const res = await this.onFetch(`/books/`);
-    return res.map(this._transformCharacter);
-  }
+    return res.map(this._transformBook);
+  };
 
-  async getBook(id) {
+  getBook = async (id) => {
     const res = await this.onFetch(`/books/${id}`);
-    return this._transformCharacter(res);
-  }
+    return this._transformBook(res);
+  };
 
   _transformCharacter(char) {
     return {
       id: parseInt(char.url.split("/")[char.url.split("/").length - 1]),
-      name: char.name,
-      gender: char.gender,
-      born: char.born,
-      died: char.died,
-      culture: char.culture,
+      name: char.name ? char.name : "нет данных",
+      gender: char.gender ? char.gender : "нет данных",
+      born: char.born ? char.born : "нет данных",
+      died: char.died ? char.died : "нет данных",
+      culture: char.culture ? char.culture : "нет данных",
     };
   }
 
   _transformHouse(house) {
     return {
+      id: parseInt(house.url.split("/")[house.url.split("/").length - 1]),
       name: house.name,
       region: house.region,
       words: house.words,
@@ -66,6 +68,7 @@ export default class GodService {
 
   _transformBook(book) {
     return {
+      id: parseInt(book.url.split("/")[book.url.split("/").length - 1]),
       name: book.name,
       numberOfPages: book.numberOfPages,
       publiser: book.publiser,

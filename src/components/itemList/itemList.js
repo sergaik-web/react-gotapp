@@ -1,20 +1,19 @@
 import React, { Component } from "react";
 import "./itemList.css";
-import GodService from "../../scripts/fetch";
 import Spiner from "../spiner";
 import ErrorMessage from "../errorMess";
 
 export default class ItemList extends Component {
-  godService = new GodService();
-
   state = {
-    charList: null,
+    itemList: null,
     error: false,
   };
 
   componentDidMount() {
-    this.godService.getAllCharacters().then((charList) => {
-      this.setState({ charList });
+    const { getData } = this.props;
+
+    getData().then((itemList) => {
+      this.setState({ itemList });
     });
   }
 
@@ -26,13 +25,15 @@ export default class ItemList extends Component {
 
   renderItem(arr) {
     return arr.map((item) => {
+      const { id } = item;
+      const label = this.props.renderItem(item);
       return (
         <li
-          key={item.id}
+          key={id}
           className="list-group-item"
-          onClick={() => this.props.onCharSelected(item.id)}
+          onClick={() => this.props.onItemSelected(item.id)}
         >
-          {item.name}
+          {label}
         </li>
       );
     });
@@ -43,13 +44,13 @@ export default class ItemList extends Component {
       return <ErrorMessage />;
     }
 
-    const { charList } = this.state;
+    const { itemList } = this.state;
 
-    if (!charList) {
+    if (!itemList) {
       return <Spiner />;
     }
 
-    const items = this.renderItem(charList);
+    const items = this.renderItem(itemList);
 
     return <ul className="item-list list-group">{items}</ul>;
   }

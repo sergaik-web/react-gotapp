@@ -34,13 +34,19 @@ export default class RandomChar extends Component {
   };
 
   updateChar = () => {
-    console.log("update");
     const id = Math.floor(Math.random() * 400 + 25);
     this.gotService
       .getCharacter(id)
       .then(this.onCharLoaded)
       .catch(this.onError);
   };
+
+  componentDidCatch() {
+    this.setState({
+      error: true,
+      loading: false,
+    });
+  }
 
   render() {
     const { char, loading, error } = this.state;

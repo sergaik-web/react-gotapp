@@ -3,6 +3,8 @@ import { Button, Col, Row, Container } from "reactstrap";
 import Header from "../header";
 import RandomChar from "../randomChar";
 import CharPage from "../charPage";
+import BookPage from "../bookPage";
+import HousePage from "../housePage";
 
 export default class App extends Component {
   state = {
@@ -33,6 +35,8 @@ export default class App extends Component {
             </Col>
           </Row>
           <CharPage />
+          <BookPage />
+          <HousePage />
         </Container>
       </>
     );
