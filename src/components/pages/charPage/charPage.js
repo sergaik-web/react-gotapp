@@ -1,20 +1,20 @@
 import React, { Component } from "react";
-import ItemList from "../itemList";
-import CharDetails, { Field } from "../charDetails";
-import ErrorMessage from "../errorMess";
-import GodService from "../../scripts/fetch";
-import RowBlock from "../rowBlock";
+import ItemList from "../../itemList";
+import CharDetails, { Field } from "../../charDetails";
+import ErrorMessage from "../../errorMess";
+import GodService from "../../../scripts/fetch";
+import RowBlock from "../../rowBlock";
 
 export default class CharPage extends Component {
   gotService = new GodService();
   state = {
-    selectedChar: 130,
+    selectedItem: null,
     error: false,
   };
 
   onItemSelected = (id) => {
     this.setState({
-      selectedChar: id,
+      selectedItem: id,
     });
   };
 
@@ -38,7 +38,11 @@ export default class CharPage extends Component {
     );
 
     const charDetails = (
-      <CharDetails charId={this.state.selectedChar}>
+      <CharDetails
+          itemId={this.state.selectedItem}
+          getData={this.gotService.getCharacter}
+          title={'Выберите, пожалуйста, персонажа из списка'}
+      >
         <Field field={"gender"} label={"Gender"} />
         <Field field={"born"} label={"Born"} />
         <Field field={"died"} label={"Died"} />

@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { Button, Col, Row, Container } from "reactstrap";
 import Header from "../header";
 import RandomChar from "../randomChar";
-import CharPage from "../charPage";
-import BookPage from "../bookPage";
-import HousePage from "../housePage";
+import CharPage from "../pages/charPage";
+import BookPage from "../pages/bookPage";
+import HousePage from "../pages/housePage";
 
 export default class App extends Component {
   state = {

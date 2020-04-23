@@ -14,7 +14,6 @@ export default class GodService {
   getAllCharacters = async () => {
     const rnd = Math.floor(Math.random() * 100);
     const res = await this.onFetch(`/characters?page=${rnd}&pageSize=6`);
-    console.log(res);
     return res.map(this._transformCharacter);
   };
 
@@ -29,7 +28,7 @@ export default class GodService {
   };
 
   getHouse = async (id) => {
-    const res = await this.onFetch(`/characters/${id}`);
+    const res = await this.onFetch(`/houses/${id}`);
     return this._transformHouse(res);
   };
 
@@ -55,24 +54,25 @@ export default class GodService {
   }
 
   _transformHouse(house) {
+    console.log(house);
     return {
       id: parseInt(house.url.split("/")[house.url.split("/").length - 1]),
-      name: house.name,
-      region: house.region,
-      words: house.words,
-      titles: house.titles,
-      overlord: house.overlord,
-      ancestralWeapons: house.ancestralWeapoons,
+      name: house.name ? house.name : 'нет данных',
+      region: house.region ? house.region : 'нет данных',
+      words: house.words ? house.words : 'нет данных',
+      titles: house.titles[0]!=="" ? house.titles : 'нет данных',
+      overlord: house.overlord ? house.overlord : 'нет данных',
+      ancestralWeapons: house.ancestralWeapoons ? house.ancestralWeapoons : 'нет данных'
     };
   }
 
   _transformBook(book) {
     return {
       id: parseInt(book.url.split("/")[book.url.split("/").length - 1]),
-      name: book.name,
-      numberOfPages: book.numberOfPages,
-      publiser: book.publiser,
-      released: book.released,
+      name: book.name ? book.name : 'Нет данных',
+      numberOfPages: book.numberOfPages ? book.numberOfPages : 'Нет данных',
+      publisher: book.publisher ? book.publisher : 'Нет данных',
+      released: book.released ? book.released : 'Нет данных'
     };
   }
 }
