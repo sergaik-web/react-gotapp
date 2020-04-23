@@ -54,7 +54,6 @@ export default class GodService {
   }
 
   _transformHouse(house) {
-    console.log(house);
     return {
       id: parseInt(house.url.split("/")[house.url.split("/").length - 1]),
       name: house.name ? house.name : 'нет данных',

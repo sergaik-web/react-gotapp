@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./charDetails.css";
 import ErrorMessage from "../errorMess";
+import Spiner from "../spiner";
 
 const Field = ({ item, field, label }) => {
   return (
@@ -14,15 +15,13 @@ const Field = ({ item, field, label }) => {
 export { Field };
 
 export default class CharDetails extends Component {
-
-
   state = {
     item: null,
     error: false,
   };
 
   componentDidUpdate(prevProps) {
-    const {getData} = this.props;
+    const { getData } = this.props;
     if (prevProps.itemId !== this.props.itemId) {
       getData(this.props.itemId).then((item) => {
         this.setState({ item });
@@ -37,12 +36,16 @@ export default class CharDetails extends Component {
   }
 
   render() {
-    const {title}=this.props;
+    const { title } = this.props;
     if (this.state.error) {
       return <ErrorMessage />;
     }
 
     if (this.state.item === null) {
+      if (!title) {
+        return <Spiner />;
+      }
+
       return (
         <span>
           <h2>{title}</h2>
