@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ItemList from "../../itemList";
-import CharDetails, { Field } from "../../charDetails";
+import ItemDetails, { Field } from "../../itemDetails";
 import ErrorMessage from "../../errorMess";
 import GodService from "../../../scripts/fetch";
 import RowBlock from "../../rowBlock";
@@ -30,23 +30,25 @@ export default class CharPage extends Component {
     }
 
     const itemList = (
-        <ItemList
-            onItemSelected={this.onItemSelected}
-            getData={this.gotService.getAllBooks}
-            renderItem={({ name, numberOfPages }) => `${name} (Pages: ${numberOfPages})`}
-        />
+      <ItemList
+        onItemSelected={this.onItemSelected}
+        getData={this.gotService.getAllBooks}
+        renderItem={({ name, numberOfPages }) =>
+          `${name} (Pages: ${numberOfPages})`
+        }
+      />
     );
 
     const charDetails = (
-        <CharDetails
-            itemId={this.state.selectedItem}
-            getData={this.gotService.getBook}
-            title={'Выберите, пожалуйста, книгу из списка'}
-        >
-          <Field field={"numberOfPages"} label={"Pages"} />
-          <Field field={"publisher"} label={"Publisher"} />
-          <Field field={"released"} label={"Released"} />
-        </CharDetails>
+      <ItemDetails
+        itemId={this.state.selectedItem}
+        getData={this.gotService.getBook}
+        title={"Выберите, пожалуйста, книгу из списка"}
+      >
+        <Field field={"numberOfPages"} label={"Pages"} />
+        <Field field={"publisher"} label={"Publisher"} />
+        <Field field={"released"} label={"Released"} />
+      </ItemDetails>
     );
 
     return <RowBlock left={itemList} right={charDetails} />;

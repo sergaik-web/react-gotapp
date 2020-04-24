@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./charDetails.css";
+import "./itemDetails.css";
 import ErrorMessage from "../errorMess";
 import Spiner from "../spiner";
 
@@ -14,7 +14,7 @@ const Field = ({ item, field, label }) => {
 
 export { Field };
 
-export default class CharDetails extends Component {
+export default class ItemDetails extends Component {
   state = {
     item: null,
     error: false,
@@ -27,6 +27,13 @@ export default class CharDetails extends Component {
         this.setState({ item });
       });
     }
+  }
+
+  componentDidMount() {
+    const { getData } = this.props;
+    getData(this.props.itemId).then((item) => {
+      this.setState({ item });
+    });
   }
 
   componentDidCatch() {
@@ -44,13 +51,12 @@ export default class CharDetails extends Component {
     if (this.state.item === null) {
       if (!title) {
         return <Spiner />;
-      }
-
-      return (
-        <span>
-          <h2>{title}</h2>
-        </span>
-      );
+      } else
+        return (
+          <span>
+            <h2>{title}</h2>
+          </span>
+        );
     }
 
     const { item } = this.state;

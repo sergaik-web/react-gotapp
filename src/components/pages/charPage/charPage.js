@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ItemList from "../../itemList";
-import CharDetails, { Field } from "../../charDetails";
+import ItemDetails, { Field } from "../../itemDetails";
 import ErrorMessage from "../../errorMess";
 import GodService from "../../../scripts/fetch";
 import RowBlock from "../../rowBlock";
@@ -38,16 +38,16 @@ export default class CharPage extends Component {
     );
 
     const charDetails = (
-      <CharDetails
-          itemId={this.state.selectedItem}
-          getData={this.gotService.getCharacter}
-          title={'Выберите, пожалуйста, персонажа из списка'}
+      <ItemDetails
+        itemId={this.state.selectedItem}
+        getData={this.gotService.getCharacter}
+        title={"Выберите, пожалуйста, персонажа из списка"}
       >
         <Field field={"gender"} label={"Gender"} />
         <Field field={"born"} label={"Born"} />
         <Field field={"died"} label={"Died"} />
         <Field field={"culture"} label={"Culture"} />
-      </CharDetails>
+      </ItemDetails>
     );
 
     return <RowBlock left={itemList} right={charDetails} />;

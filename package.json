@@ -28,6 +28,7 @@
   ],
   "devDependencies": {
     "bootstrap": "^4.4.1",
-    "prettier": "^2.0.4"
+    "prettier": "^2.0.4",
+    "react-router-dom": "^5.1.2"
   }
 }

@@ -2,18 +2,9 @@ import React, { Component } from "react";
 import "./randomChar.css";
 import GodService from "../../scripts/fetch";
 import ErrorMessage from "../errorMess";
-import CharDetails, { Field } from "../charDetails";
+import ItemDetails, { Field } from "../itemDetails";
 
 export default class RandomChar extends Component {
-  componentDidMount() {
-    this.updateChar();
-    this.timerId = setInterval(this.updateChar, 3000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timerId);
-  }
-
   gotService = new GodService();
 
   state = {
@@ -28,6 +19,15 @@ export default class RandomChar extends Component {
     });
   };
 
+  componentDidMount() {
+    this.updateChar();
+    this.timerId = setInterval(this.updateChar, 3000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerId);
+  }
+
   componentDidCatch() {
     this.setState({
       error: true,
@@ -36,7 +36,7 @@ export default class RandomChar extends Component {
 
   render() {
     const charDetails = (
-      <CharDetails
+      <ItemDetails
         itemId={this.state.selectedItem}
         getData={this.gotService.getCharacter}
       >
@@ -44,12 +44,11 @@ export default class RandomChar extends Component {
         <Field field={"born"} label={"Born"} />
         <Field field={"died"} label={"Died"} />
         <Field field={"culture"} label={"Culture"} />
-      </CharDetails>
+      </ItemDetails>
     );
 
     const { error } = this.state;
     const errMsg = error ? <ErrorMessage /> : null;
-
     const content = !error ? charDetails : null;
 
     return (
