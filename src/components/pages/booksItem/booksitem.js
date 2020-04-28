@@ -5,14 +5,10 @@ import ItemDetails, { Field } from "../../itemDetails";
 export default class BooksItem extends Component {
   gotService = new GodService();
 
-  state = {
-    selectedItem: 3,
-  };
-
   render() {
     return (
       <ItemDetails
-        itemId={this.state.selectedItem}
+        itemId={this.props.bookId}
         getData={this.gotService.getBook}
         title={"Выберите, пожалуйста, книгу из списка"}
       >

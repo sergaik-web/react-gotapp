@@ -41,7 +41,13 @@ export default class App extends Component {
             <Route path={"/characters"} component={CharPage} />
             <Route path={"/houses"} component={HousePage} />
             <Route path={"/books"} exact component={BookPage} />
-            <Route path={"/books/:id"} render={() => <BooksItem />} />
+            <Route
+              path={"/books/:id"}
+              render={({ match }) => {
+                const { id } = match.params;
+                return <BooksItem bookId={id} />;
+              }}
+            />
           </Container>
         </div>
       </Router>

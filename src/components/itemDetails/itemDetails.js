@@ -31,9 +31,11 @@ export default class ItemDetails extends Component {
 
   componentDidMount() {
     const { getData } = this.props;
-    getData(this.props.itemId).then((item) => {
-      this.setState({ item });
-    });
+    if (this.props.itemId) {
+      getData(this.props.itemId).then((item) => {
+        this.setState({ item });
+      });
+    }
   }
 
   componentDidCatch() {
