@@ -3,25 +3,16 @@ import "./itemList.css";
 import Spiner from "../spiner";
 import ErrorMessage from "../errorMess";
 
-export default class ItemList extends Component {
-  state = {
-    itemList: null,
-    error: false,
-  };
-
-  componentDidMount() {
-    const { getData } = this.props;
-
-    getData().then((itemList) => {
-      this.setState({ itemList });
-    });
-  }
-
+class ItemList extends Component {
   componentDidCatch() {
     this.setState({
       error: true,
     });
   }
+
+  static defaultProps = {
+    onItemSelected: () => {},
+  };
 
   renderItem(arr) {
     return arr.map((item) => {
@@ -40,18 +31,42 @@ export default class ItemList extends Component {
   }
 
   render() {
-    if (this.state.error) {
-      return <ErrorMessage />;
-    }
-
-    const { itemList } = this.state;
-
-    if (!itemList) {
-      return <Spiner />;
-    }
-
-    const items = this.renderItem(itemList);
+    const { data } = this.props;
+    const items = this.renderItem(data);
 
     return <ul className="item-list list-group">{items}</ul>;
   }
 }
+
+const withData = (View) => {
+  return class extends Component {
+    state = {
+      data: null,
+      error: false,
+    };
+
+    componentDidMount() {
+      const { getData } = this.props;
+
+      getData().then((data) => {
+        this.setState({ data });
+      });
+    }
+
+    render() {
+      if (this.state.error) {
+        return <ErrorMessage />;
+      }
+
+      const { data } = this.state;
+
+      if (!data) {
+        return <Spiner />;
+      }
+
+      return <View {...this.props} data={data} />;
+    }
+  };
+};
+
+export default withData(ItemList);
